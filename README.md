@@ -1,6 +1,6 @@
 # Gemini Cite Hider (Chrome 拡張機能)
 
-Google Gemini（`https://gemini.google.com/*`）、Gemini Notebook（`https://notebook.google.com/*`）および NotebookLM（`https://notebooklm.google.com/*`）の回答画面で、引用バッジへ変換されず生テキストとして露出してしまった `[cite: 1]` や `[cite: 2, 5]` などの内部記法を自動的に非表示にする Manifest V3 拡張機能です。
+Google Gemini（`https://gemini.google.com/*`）、Gemini Notebook（`https://notebook.google.com/*`）の回答画面で、引用バッジへ変換されず生テキストとして露出してしまった `[cite: 1]` や `[cite: 2, 5]` などの内部記法を自動的に非表示にする Manifest V3 拡張機能です。
 
 ## 主な機能
 
@@ -29,7 +29,7 @@ Google Gemini（`https://gemini.google.com/*`）、Gemini Notebook（`https://no
 
 ## 動作確認手順
 
-1. `https://gemini.google.com/`、`https://notebook.google.com/`、または `https://notebooklm.google.com/` を開きます（すでに開いていたタブは一度再読み込みしてください）。
+1. `https://gemini.google.com/`、`https://notebook.google.com/`を開きます（すでに開いていたタブは一度再読み込みしてください）。
 2. `[cite: 2, 5]` のような生テキストが含まれる回答を表示または生成します。
 3. 画面上から `[cite: *]` が消え、直前に余分なスペースが残らないこと（例: `学んだ [cite: 2]。` が `学んだ。` になること）を確認します。
 4. 回答テキストをドラッグ選択してコピー（`Ctrl+C` / `Cmd+C`）し、メモ帳等に貼り付けて `[cite: *]` が含まれないことを確認します。
