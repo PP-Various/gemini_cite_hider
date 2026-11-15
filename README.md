@@ -5,7 +5,7 @@ Google Gemini（`https://gemini.google.com/*`）、Gemini Notebook（`https://no
 ## 主な機能
 
 - **自動検知・非表示化**: `[cite: 1]`、`[cite: 2, 5]`、`[cite: 3, 4, 6, 7]`、`[cite: 1-3]` などの生引用表記を検知し、直前の不要な半角スペースも含めて自然に非表示化します。
-- **コピー＆ペースト対応**: `display: none !important` と `user-select: none !important` を適用した専用 `<span>` でラップするため、回答を選択してコピーしても `[cite: *]` がクリップボードに混入しません。
+- **コピー＆ペースト対応**: `display: none !important` と `user-select: none !important` を適用した専用 `<span>` でラップし、さらに非表示時はテキスト本体も退避して Clipboard API やコピーボタン経由のコピー時にも `[cite: *]` を自動除外します。
 - **正常バッジの保護**: 正常にレンダリングされた丸い引用チップ（UI バッジ）には影響しません。
 - **リアルタイム・ストリーミング対応**: `MutationObserver`（`childList` / `characterData` / Open Shadow DOM）により、回答の生成途中および完了後も遅延なく処理します。
 - **誤爆防止**: ユーザー入力欄（`<textarea>`、`<input>`、`contenteditable`、`[role="textbox"]`）やコードブロック（`<pre>`、`<code>`）内のテキストは変更しません。
@@ -15,6 +15,7 @@ Google Gemini（`https://gemini.google.com/*`）、Gemini Notebook（`https://no
 
 - `manifest.json`: Manifest V3 定義ファイル
 - `content.js`: DOM 監視・`[cite: *]` 検知および非表示処理
+- `clipboard_guard.js`: MAIN world での Clipboard API / コピー処理サニタイズ
 - `styles.css`: 非表示トークン用スタイル
 - `background.js`: 拡張機能アイコンバッジ更新用 Service Worker
 - `popup.html` / `popup.css` / `popup.js`: ポップアップ UI（ON/OFF トグル・件数カウンター）
@@ -29,7 +30,7 @@ Google Gemini（`https://gemini.google.com/*`）、Gemini Notebook（`https://no
 
 ## 動作確認手順
 
-1. `https://gemini.google.com/`、`https://notebook.google.com/`を開きます（すでに開いていたタブは一度再読み込みしてください）。
+1. `https://gemini.google.com/`、`https://notebook.google.com/` を開きます（すでに開いていたタブは一度再読み込みしてください）。
 2. `[cite: 2, 5]` のような生テキストが含まれる回答を表示または生成します。
 3. 画面上から `[cite: *]` が消え、直前に余分なスペースが残らないこと（例: `学んだ [cite: 2]。` が `学んだ。` になること）を確認します。
 4. 回答テキストをドラッグ選択してコピー（`Ctrl+C` / `Cmd+C`）し、メモ帳等に貼り付けて `[cite: *]` が含まれないことを確認します。

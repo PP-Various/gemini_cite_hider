@@ -40,6 +40,8 @@
 
   /** @type {WeakMap<Text, { baseText: string, sourceText: string, siblings: Node[] }>} */
   const splitRecords = new WeakMap();
+  /** @type {WeakMap<Element, string>} */
+  const tokenTexts = new WeakMap();
   /** @type {WeakSet<Node>} */
   const observedRoots = new WeakSet();
   /** @type {Set<ShadowRoot>} */
@@ -73,18 +75,33 @@
   }
 
   /**
-   * 全ての監視済み ShadowRoot 内の既存トークンの状態を同期する。
+   * 全ての監視済みルート（Document および ShadowRoot）内の既存トークン表示状態・文字列を同期する。
    */
-  function syncAllShadowTokens() {
+  function syncAllTokens() {
+    const syncRoot = (root, inShadow) => {
+      const tokens = root.querySelectorAll(`[${TOKEN_ATTR}="${TOKEN_VALUE}"]`);
+      for (const token of tokens) {
+        const original = tokenTexts.get(token);
+        if (typeof original === 'string') {
+          const desired = isEnabled ? '' : original;
+          if (token.textContent !== desired) {
+            token.textContent = desired;
+          }
+        }
+        if (inShadow) {
+          applyShadowTokenState(token);
+        }
+      }
+    };
+
+    syncRoot(document, false);
+
     for (const shadowRoot of trackedShadowRoots) {
       if (!shadowRoot.host?.isConnected) {
         trackedShadowRoots.delete(shadowRoot);
         continue;
       }
-      const tokens = shadowRoot.querySelectorAll(`[${TOKEN_ATTR}="${TOKEN_VALUE}"]`);
-      for (const token of tokens) {
-        applyShadowTokenState(token);
-      }
+      syncRoot(shadowRoot, true);
     }
   }
 
@@ -245,12 +262,14 @@
 
   /**
    * 非表示トークン用の <span> を生成する。
+   * 有効時は DOM 内のテキストも空にし、元文字列は WeakMap に退避する。
    */
   function createHiddenSpan(tokenText, inShadowDom) {
     const span = document.createElement('span');
     span.setAttribute(TOKEN_ATTR, TOKEN_VALUE);
     span.setAttribute('aria-hidden', 'true');
-    span.textContent = tokenText;
+    tokenTexts.set(span, tokenText);
+    span.textContent = isEnabled ? '' : tokenText;
     if (inShadowDom) {
       applyShadowTokenState(span);
     }
@@ -472,7 +491,7 @@
     isEnabled = Boolean(nextEnabled);
     applyRootState();
     withMutationGuard(() => {
-      syncAllShadowTokens();
+      syncAllTokens();
       if (isEnabled && document.body) {
         scanSubtree(document.body);
       }
