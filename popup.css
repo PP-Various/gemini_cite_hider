@@ -1,0 +1,366 @@
+@layer reset, tokens, base, components;
+
+@layer reset {
+  html,
+  body,
+  h1,
+  p {
+    margin: 0;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+}
+
+@layer tokens {
+  :root {
+    color-scheme: light dark;
+
+    /* Material 3 Expressive ベースカラー (oklch + light-dark) */
+    --md-sys-color-primary: light-dark(oklch(48% 0.19 266), oklch(78% 0.14 266));
+    --md-sys-color-on-primary: light-dark(oklch(99% 0.01 266), oklch(22% 0.09 266));
+    --md-sys-color-primary-container: light-dark(oklch(91% 0.06 266), oklch(34% 0.12 266));
+    --md-sys-color-on-primary-container: light-dark(oklch(24% 0.11 266), oklch(93% 0.05 266));
+
+    --md-sys-color-tertiary-container: light-dark(oklch(92% 0.07 155), oklch(32% 0.09 155));
+    --md-sys-color-on-tertiary-container: light-dark(oklch(28% 0.09 155), oklch(90% 0.07 155));
+
+    --md-sys-color-surface: light-dark(oklch(98% 0.01 265), oklch(17% 0.015 265));
+    --md-sys-color-surface-container: light-dark(oklch(94.5% 0.015 265), oklch(22% 0.02 265));
+    --md-sys-color-surface-container-high: light-dark(oklch(91% 0.02 265), oklch(27% 0.025 265));
+
+    --md-sys-color-on-surface: light-dark(oklch(20% 0.02 265), oklch(94% 0.01 265));
+    --md-sys-color-on-surface-variant: light-dark(oklch(44% 0.025 265), oklch(76% 0.02 265));
+    --md-sys-color-outline: light-dark(oklch(58% 0.025 265), oklch(62% 0.025 265));
+    --md-sys-color-outline-variant: light-dark(oklch(83% 0.02 265), oklch(35% 0.025 265));
+
+    --md-sys-shape-corner-xl: 24px;
+    --md-sys-shape-corner-lg: 18px;
+    --md-sys-shape-corner-md: 14px;
+    --md-sys-shape-corner-full: 9999px;
+
+    --md-sys-motion-spring: 260ms cubic-bezier(0.2, 0.9, 0.3, 1.15);
+    --md-sys-motion-standard: 180ms cubic-bezier(0.2, 0, 0, 1);
+
+    accent-color: var(--md-sys-color-primary);
+  }
+}
+
+@layer base {
+  body {
+    width: 344px;
+    background-color: var(--md-sys-color-surface);
+    color: var(--md-sys-color-on-surface);
+    font-family: "Segoe UI", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
+    line-height: 1.45;
+  }
+
+  code {
+    font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+    background-color: var(--md-sys-color-surface-container-high);
+  }
+}
+
+@layer components {
+  .popup-shell {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  /* ヘッダー */
+  .hero-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .brand-emblem {
+    display: grid;
+    place-items: center;
+    inline-size: 40px;
+    block-size: 40px;
+    flex: none;
+    border-radius: var(--md-sys-shape-corner-md);
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+  }
+
+  .brand-emblem svg {
+    inline-size: 22px;
+    block-size: 22px;
+  }
+
+  .brand-text {
+    min-width: 0;
+  }
+
+  .app-title {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .app-subtitle {
+    font-size: 0.75rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    padding: 5px 10px;
+    border-radius: var(--md-sys-shape-corner-full);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .status-pill[data-state="active"] {
+    border-color: transparent;
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+  }
+
+  .status-pill[data-state="paused"] {
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  .status-dot {
+    inline-size: 7px;
+    block-size: 7px;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: currentColor;
+  }
+
+  /* 統計カード (Material 3 Expressive 形状コントラスト) */
+  .stat-card {
+    display: grid;
+    gap: 6px;
+    padding: 16px 18px;
+    border-radius: var(--md-sys-shape-corner-xl);
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: 1px solid color-mix(in oklab, var(--md-sys-color-primary) 18%, transparent);
+    transition: background-color var(--md-sys-motion-standard),
+      color var(--md-sys-motion-standard);
+  }
+
+  .popup-shell:has(.m3-switch:not(:checked)) .stat-card {
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border-color: var(--md-sys-color-outline-variant);
+  }
+
+  .stat-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.92;
+  }
+
+  .stat-icon {
+    display: grid;
+    place-items: center;
+    inline-size: 28px;
+    block-size: 28px;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: color-mix(in oklab, currentColor 12%, transparent);
+  }
+
+  .stat-icon svg {
+    inline-size: 16px;
+    block-size: 16px;
+  }
+
+  .stat-metric {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    padding-block: 2px;
+  }
+
+  .stat-value {
+    font-size: 2.35rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-unit {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .stat-note {
+    font-size: 0.76rem;
+    opacity: 0.88;
+  }
+
+  /* トグルコントロールカード */
+  .control-card {
+    padding: 14px 16px;
+    border-radius: var(--md-sys-shape-corner-lg);
+    background-color: var(--md-sys-color-surface-container);
+    border: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .switch-label {
+    display: grid;
+    gap: 3px;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .control-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  .control-desc {
+    font-size: 0.74rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+
+  /* Material 3 Expressive スイッチ（ネイティブ checkbox + role="switch" ベース） */
+  .m3-switch {
+    box-sizing: border-box;
+    appearance: none;
+    position: relative;
+    flex: none;
+    inline-size: 52px;
+    block-size: 32px;
+    margin: 0;
+    border-radius: var(--md-sys-shape-corner-full);
+    border: 2px solid var(--md-sys-color-outline);
+    background-color: var(--md-sys-color-surface-container-high);
+    cursor: pointer;
+    transition: background-color var(--md-sys-motion-standard),
+      border-color var(--md-sys-motion-standard);
+  }
+
+  .m3-switch::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 6px;
+    inline-size: 16px;
+    block-size: 16px;
+    border-radius: var(--md-sys-shape-corner-full);
+    background-color: var(--md-sys-color-outline);
+    transform: translateY(-50%);
+    transition: transform var(--md-sys-motion-spring),
+      inline-size var(--md-sys-motion-spring),
+      block-size var(--md-sys-motion-spring),
+      background-color var(--md-sys-motion-standard);
+  }
+
+  .m3-switch:checked {
+    border-color: var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-primary);
+  }
+
+  .m3-switch:checked::before {
+    inline-size: 24px;
+    block-size: 24px;
+    background-color: var(--md-sys-color-on-primary);
+    transform: translate(16px, -50%);
+  }
+
+  .m3-switch:active::before {
+    inline-size: 26px;
+    block-size: 26px;
+  }
+
+  .m3-switch:focus-visible {
+    outline: 3px solid var(--md-sys-color-primary);
+    outline-offset: 3px;
+  }
+
+  /* フッター */
+  .target-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-inline: 4px;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.72rem;
+  }
+
+  .footer-icon {
+    display: grid;
+    place-items: center;
+    inline-size: 14px;
+    block-size: 14px;
+    flex: none;
+  }
+
+  .footer-icon svg {
+    inline-size: 14px;
+    block-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .m3-switch,
+  .m3-switch::before {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .stat-card,
+  .control-card,
+  .status-pill,
+  .m3-switch {
+    border: 1px solid CanvasText;
+  }
+
+  .m3-switch::before {
+    background-color: CanvasText;
+  }
+
+  .m3-switch:checked {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+
+  .m3-switch:checked::before {
+    background-color: HighlightText;
+  }
+}

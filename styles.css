@@ -1,0 +1,8 @@
+/* ON のときのみ [cite: *] トークンを視覚・選択・読み上げから完全に除外する */
+html:not([data-cite-hider="off"]) [data-cite-hider="token"] {
+  display: none !important;
+  visibility: hidden !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  speak: never !important;
+}

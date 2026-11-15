@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Gemini Cite Hider</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <main class="popup-shell">
+    <header class="hero-header">
+      <div class="brand-group">
+        <div class="brand-emblem" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3z" />
+            <path d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="app-title">Gemini Cite Hider</h1>
+          <p class="app-subtitle">生の引用タグ自動クリーンアップ</p>
+        </div>
+      </div>
+
+      <span id="site-pill" class="status-pill" data-state="inactive">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="site-pill-text">確認中</span>
+      </span>
+    </header>
+
+    <section class="stat-card" aria-labelledby="stat-heading">
+      <div class="stat-top">
+        <span id="stat-heading" class="stat-label">現在のタブで非表示にした引用</span>
+        <span class="stat-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+            <line x1="2" y1="2" x2="22" y2="22" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="stat-metric">
+        <output id="hidden-count" class="stat-value" for="toggle-enabled">0</output>
+        <span class="stat-unit">件</span>
+      </div>
+
+      <p id="stat-note" class="stat-note" aria-live="polite">
+        対象ページでステータスを取得しています
+      </p>
+    </section>
+
+    <section class="control-card" aria-label="動作設定">
+      <div class="switch-row">
+        <label class="switch-label" for="toggle-enabled">
+          <span class="control-title"><code>[cite: *]</code> の自動非表示</span>
+          <span class="control-desc">表示・コピーの両方から除外し、正常バッジは維持します</span>
+        </label>
+        <input id="toggle-enabled" class="m3-switch" type="checkbox" role="switch" checked>
+      </div>
+    </section>
+
+    <footer class="target-footer">
+      <span class="footer-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M2 12h20" />
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </svg>
+      </span>
+      <span class="footer-text">対象: gemini / notebook / notebook.google.com</span>
+    </footer>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
