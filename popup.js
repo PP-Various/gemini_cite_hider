@@ -40,7 +40,7 @@
       sitePillEl.dataset.state = 'inactive';
       sitePillTextEl.textContent = '対象外ページ';
       countEl.textContent = '0';
-      noteEl.textContent = 'Gemini または NotebookLM のタブでカウントが表示されます';
+      noteEl.textContent = 'Gemini または Notebook のタブでカウントが表示されます';
       return;
     }
 

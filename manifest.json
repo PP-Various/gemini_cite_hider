@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gemini Cite Hider",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Google Gemini や Notebook の回答画面で生テキストとして露出する [cite: *] 表記を自動的に非表示・コピー除外します。",
   "permissions": [
     "storage",
